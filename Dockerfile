@@ -5,6 +5,4 @@ RUN apk add gcc
 
 COPY ./main /app
 
-WORKDIR /app
-
-ENTRYPOINT ["main"]
+ENTRYPOINT ["/app"]
