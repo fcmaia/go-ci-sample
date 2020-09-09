@@ -1,0 +1,25 @@
+steps:
+
+    - id: "Running TEST"
+      name: 'gcr.io/cloud-builders/go'
+      args: ['test','-timeout','30s','-run','^TestSum1$']  
+    
+    - id: "Running Build"
+      name: 'gcr.io/cloud-builders/go'
+      args: ['build','-ldflags','"-s -w"','--buildmode=exe','-o','main']  
+    
+    - id: "Chown in /var/www/storage"
+      name: 'gcr.io/cloud-builders/docker'
+      args: ['exec','-u','root','-t','app','chown','-R','www-data:www-data','/var/www/storage']
+    
+    - id: "Chmod /var/www/storage"
+      name: 'gcr.io/cloud-builders/docker'
+      args: ['exec','-u','root','-t','app','chmod','0777','/var/www/storage','-R']
+    
+    - id: "Running composer"
+      name: 'gcr.io/cloud-builders/docker'
+      args: ['exec','-t','app','composer','install']  
+    
+    - id: "Running phpunit"
+      name: 'gcr.io/cloud-builders/docker'
+      args: ['exec','-t','app','php','/var/www/vendor/bin/phpunit','-c','/var/www/phpunit.xml']
