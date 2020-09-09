@@ -1,17 +1,19 @@
 steps:
 
     - id: "Running TEST"
-      name: 'hub.docker.com/golang'
-      args: ['test','-timeout','30s','-run','^TestSum1$']  
+      name: 'gcr.io/cloud-builders/go'
+      args: ['test','-timeout','30s','-run','^TestSum1$']
+      env: ["GOPATH=."]
     
     - id: "Running Build"
-      name: 'hub.docker.com/golang'
+      name: 'gcr.io/cloud-builders/go'
       args: ['build','-ldflags','"-s -w"','--buildmode=exe','-o','main']  
+      env: ["GOPATH=."]
     
     - id: "Building Image"
       name: 'gcr.io/cloud-builders/docker'
-      args: ['build','.']
+      args: ['build','-t','gcr.io/$PROJECT_ID/go-ci-sample','.']
     
-    - id: "Pushing Image"
-      name: 'gcr.io/cloud-builders/docker'
-      args: ['push','$PROJECT_ID/go-ci-sample']
+      # my-image is pushed to Container Registry
+images:
+  - 'gcr.io/$PROJECT_ID/go-ci-sample'
