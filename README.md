@@ -1,1 +1,3 @@
 # go-ci-sample
+
+done
