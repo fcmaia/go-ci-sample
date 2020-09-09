@@ -7,7 +7,7 @@ steps:
     
     - id: "Running Build"
       name: 'gcr.io/cloud-builders/go'
-      args: ['build','-ldflags','"-s -w"','--buildmode=exe','-o','main']  
+      args: ['build','-ldflags="-s -w"','--buildmode=exe','-o','main']  
       env: ["GOPATH=."]
     
     - id: "Building Image"
