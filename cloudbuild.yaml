@@ -1,11 +1,11 @@
 steps:
 
     - id: "Running TEST"
-      name: 'https://hub.docker.com/golang'
+      name: 'hub.docker.com/golang'
       args: ['test','-timeout','30s','-run','^TestSum1$']  
     
     - id: "Running Build"
-      name: 'https://hub.docker.com/golang'
+      name: 'hub.docker.com/golang'
       args: ['build','-ldflags','"-s -w"','--buildmode=exe','-o','main']  
     
     - id: "Building Image"
